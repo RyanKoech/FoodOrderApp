@@ -19,12 +19,14 @@ class Dimensions {
   //Relative Heights
   static final double size10 = dynamicSize(10);
   static final double size15 = dynamicSize(15);
+  static final double size16 = dynamicSize(16);
   static final double size20 = dynamicSize(20);
   static final double size24 = dynamicSize(24);
   static final double size30 = dynamicSize(30);
   static final double size45 = dynamicSize(45);
   static final double size100 = dynamicSize(100);
   static final double size120 = dynamicSize(120);
+  static final double size350 = dynamicSize(350);
 
   //Relavie Widths
   static final double size100w = dynamicSizeW(100);
