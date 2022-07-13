@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/utils/dimensions.dart';
+import 'package:food_delivery/widgets/expandable_text.dart';
 import 'package:food_delivery/widgets/main_info_column.dart';
 
 import '../../utils/colors.dart';
@@ -15,6 +16,7 @@ class PopularFoodDetail extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
+          //Background Image
           Positioned(
             left: 0,
             right: 0,
@@ -27,6 +29,7 @@ class PopularFoodDetail extends StatelessWidget {
                       image: AssetImage("assets/image/food0.png"))),
             ),
           ),
+          //Action Icons
           Positioned(
             top: Dimensions.size45,
             left: Dimensions.size20,
@@ -39,6 +42,7 @@ class PopularFoodDetail extends StatelessWidget {
               ],
             ),
           ),
+          //Body
           Positioned(
             left: 0,
             right: 0,
@@ -65,11 +69,21 @@ class PopularFoodDetail extends StatelessWidget {
                   SizedBox(
                     height: Dimensions.size20,
                   ),
-                  BigText(text: "Introduce")
+                  BigText(text: "Introduce"),
+                  SizedBox(
+                    height: Dimensions.size20,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: ExpandableText(
+                          text:
+                              "The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database"),
+                    ),
+                  )
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
       bottomNavigationBar: Container(
