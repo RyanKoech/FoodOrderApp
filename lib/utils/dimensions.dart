@@ -17,11 +17,13 @@ class Dimensions {
   static final double pageViewTextContainer = dynamicSize(120);
 
   //Relative Heights
+  static final double size5 = dynamicSize(5);
   static final double size10 = dynamicSize(10);
   static final double size15 = dynamicSize(15);
   static final double size16 = dynamicSize(16);
   static final double size20 = dynamicSize(20);
   static final double size24 = dynamicSize(24);
+  static final double size26 = dynamicSize(26);
   static final double size30 = dynamicSize(30);
   static final double size45 = dynamicSize(45);
   static final double size100 = dynamicSize(100);
