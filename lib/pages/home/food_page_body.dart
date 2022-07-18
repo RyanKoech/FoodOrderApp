@@ -1,9 +1,13 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/controller/popular_product_controller.dart';
+import 'package:food_delivery/model/popular_products_model.dart';
+import 'package:food_delivery/utils/constants.dart';
 import 'package:food_delivery/widgets/big_text.dart';
 import 'package:food_delivery/widgets/icon_add_text.dart';
 import 'package:food_delivery/widgets/main_info_column.dart';
 import 'package:food_delivery/widgets/small_text.dart';
+import 'package:get/get.dart';
 
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
@@ -42,27 +46,47 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     return Column(
       children: [
         //Slider Section
-        Container(
-          height: Dimensions.pageView,
-          child: PageView.builder(
-            controller: pageController,
-            itemCount: 5,
-            itemBuilder: (context, position) {
-              return _buildPageItem(position);
-            },
-          ),
+        GetBuilder<PopularProductController>(
+          builder: (controller) {
+            return controller.isLoaded
+                ? Container(
+                    height: Dimensions.pageView,
+                    child: PageView.builder(
+                      controller: pageController,
+                      itemCount: controller.popularProductList.length,
+                      itemBuilder: (context, position) {
+                        return _buildPageItem(
+                            position, controller.popularProductList[position]);
+                      },
+                    ),
+                  )
+                : Container(
+                    height: Dimensions.pageView,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.mainColor,
+                      ),
+                    ),
+                  );
+          },
         ),
         //Dots Section
-        DotsIndicator(
-          dotsCount: 5,
-          position: _currPageValue,
-          decorator: DotsDecorator(
-            activeColor: AppColors.mainColor,
-            size: const Size.square(9.0),
-            activeSize: const Size(18.0, 9.0),
-            activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-          ),
+        GetBuilder<PopularProductController>(
+          builder: (controller) {
+            return DotsIndicator(
+              dotsCount: controller.popularProductList.isEmpty
+                  ? 1
+                  : controller.popularProductList.length,
+              position: _currPageValue,
+              decorator: DotsDecorator(
+                activeColor: AppColors.mainColor,
+                size: const Size.square(9.0),
+                activeSize: const Size(18.0, 9.0),
+                activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0)),
+              ),
+            );
+          },
         ),
         //PopularText
         SizedBox(
@@ -183,7 +207,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     );
   }
 
-  Widget _buildPageItem(int index) {
+  Widget _buildPageItem(int index, ProductModel popularProduct) {
     Matrix4 matrix = new Matrix4.identity();
     if (index == _currPageValue.floor() ||
         index == _currPageValue.floor() - 1) {
@@ -216,8 +240,8 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               color: index.isEven ? Color(0xFF69c5df) : Color(0xFF69c123),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(
-                  'assets/image/food0.png',
+                image: NetworkImage(
+                  Constants.BASE_URL + "uploads/" + popularProduct.img!,
                 ),
               ),
             ),
@@ -256,7 +280,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                   right: 15,
                 ),
                 child: MainInfoColumn(
-                  text: "Chinese Side",
+                  text: popularProduct.name!,
                 ),
               ),
             ),
