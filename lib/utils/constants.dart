@@ -6,6 +6,7 @@ class Constants {
   static const String BASE_URL_API = "http://mvs.bslmeiyu.com/api/v1/products/";
   static const String POPULAR_FOODS_URI = "popular";
   static const String RECOMMENDED_FOODS_URI = "recommended";
+  static const String UPLOADS_URI = "uploads/";
 
   static const String TOKEN = "dbToken";
 }
