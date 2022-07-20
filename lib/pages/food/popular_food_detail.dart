@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/controller/popular_product_controller.dart';
+import 'package:food_delivery/model/popular_products_model.dart';
+import 'package:food_delivery/pages/home/main_food_page.dart';
+import 'package:food_delivery/utils/constants.dart';
 import 'package:food_delivery/utils/dimensions.dart';
 import 'package:food_delivery/widgets/expandable_text.dart';
 import 'package:food_delivery/widgets/main_info_column.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../utils/colors.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 
 class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({Key? key}) : super(key: key);
+  int pageId;
+  PopularFoodDetail({
+    required this.pageId,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ProductModel product =
+        Get.find<PopularProductController>().popularProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -24,9 +36,13 @@ class PopularFoodDetail extends StatelessWidget {
               width: double.maxFinite,
               height: Dimensions.size350,
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/image/food0.png"))),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    Constants.BASE_URL + Constants.UPLOADS_URI + product.img!,
+                  ),
+                ),
+              ),
             ),
           ),
           //Action Icons
@@ -37,7 +53,12 @@ class PopularFoodDetail extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppIcon(icon: Icons.arrow_back_ios),
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: AppIcon(icon: Icons.arrow_back),
+                ),
                 AppIcon(icon: Icons.shopping_cart_outlined),
               ],
             ),
@@ -64,7 +85,7 @@ class PopularFoodDetail extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MainInfoColumn(
-                    text: "Chinese Side",
+                    text: product.name!,
                   ),
                   SizedBox(
                     height: Dimensions.size20,
@@ -76,8 +97,7 @@ class PopularFoodDetail extends StatelessWidget {
                   Expanded(
                     child: SingleChildScrollView(
                       child: ExpandableText(
-                        text:
-                            "The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database The @Insert annotation allows you to define methods that insert their parameters into the appropriate table in the database. The following code shows examples of valid @Insert methods that insert one or more User objects into the database",
+                        text: product.description!,
                       ),
                     ),
                   )
@@ -126,7 +146,7 @@ class PopularFoodDetail extends StatelessWidget {
                 color: AppColors.mainColor,
               ),
               child: BigText(
-                text: "\$10 | Add to Cart",
+                text: "\$${product.price!} | Add to Cart",
                 color: Colors.white,
               ),
             )
