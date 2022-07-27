@@ -24,6 +24,7 @@ class PopularFoodDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     ProductModel product =
         Get.find<PopularProductController>().popularProductList[pageId];
+    Get.find<PopularProductController>().initProduct();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -107,51 +108,64 @@ class PopularFoodDetail extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        height: Dimensions.size120,
-        padding: EdgeInsets.all(Dimensions.size20),
-        decoration: BoxDecoration(
-          color: AppColors.buttonBackgroundColor,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(Dimensions.size20 * 2),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: EdgeInsets.all(Dimensions.size20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimensions.size20),
-                color: Colors.white,
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.remove, color: AppColors.signColor),
-                  SizedBox(
-                    width: Dimensions.size5,
-                  ),
-                  BigText(text: "0"),
-                  SizedBox(
-                    width: Dimensions.size5,
-                  ),
-                  Icon(Icons.add, color: AppColors.signColor)
-                ],
+      bottomNavigationBar: GetBuilder<PopularProductController>(
+        builder: (controller) {
+          return Container(
+            height: Dimensions.size120,
+            padding: EdgeInsets.all(Dimensions.size20),
+            decoration: BoxDecoration(
+              color: AppColors.buttonBackgroundColor,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(Dimensions.size20 * 2),
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(Dimensions.size20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimensions.size20),
-                color: AppColors.mainColor,
-              ),
-              child: BigText(
-                text: "\$${product.price!} | Add to Cart",
-                color: Colors.white,
-              ),
-            )
-          ],
-        ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(Dimensions.size20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.size20),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            controller.setQuantity(false);
+                          },
+                          child:
+                              Icon(Icons.remove, color: AppColors.signColor)),
+                      SizedBox(
+                        width: Dimensions.size5,
+                      ),
+                      BigText(text: controller.quantity.toString()),
+                      SizedBox(
+                        width: Dimensions.size5,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            controller.setQuantity(true);
+                          },
+                          child: Icon(Icons.add, color: AppColors.signColor))
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(Dimensions.size20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.size20),
+                    color: AppColors.mainColor,
+                  ),
+                  child: BigText(
+                    text: "\$${product.price!} | Add to Cart",
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }
