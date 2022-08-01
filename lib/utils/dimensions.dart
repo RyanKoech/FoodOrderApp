@@ -31,6 +31,7 @@ class Dimensions {
   static final double size350 = dynamicSize(350);
 
   //Relavie Widths
+  static final double size10w = dynamicSizeW(10);
   static final double size20w = dynamicSizeW(20);
   static final double size100w = dynamicSizeW(100);
   static final double size120w = dynamicSizeW(120);
