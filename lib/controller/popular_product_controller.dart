@@ -78,6 +78,8 @@ class PopularProductController extends GetxController {
           ". The quantity is " +
           value.quantity.toString());
     });
+
+    update();
   }
 
   int get totalItems => _cart.totalItems;
