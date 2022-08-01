@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/controller/cart_controller.dart';
 import 'package:food_delivery/controller/popular_product_controller.dart';
 import 'package:food_delivery/model/popular_products_model.dart';
 import 'package:food_delivery/pages/home/main_food_page.dart';
+import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/constants.dart';
 import 'package:food_delivery/utils/dimensions.dart';
 import 'package:food_delivery/widgets/expandable_text.dart';
@@ -24,7 +26,8 @@ class PopularFoodDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     ProductModel product =
         Get.find<PopularProductController>().popularProductList[pageId];
-    Get.find<PopularProductController>().initProduct();
+    Get.find<PopularProductController>()
+        .initProduct(product, Get.find<CartController>());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -56,7 +59,7 @@ class PopularFoodDetail extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.back();
+                    Get.toNamed(RouteHelper.getInitial());
                   },
                   child: AppIcon(icon: Icons.arrow_back),
                 ),
@@ -139,7 +142,7 @@ class PopularFoodDetail extends StatelessWidget {
                       SizedBox(
                         width: Dimensions.size5,
                       ),
-                      BigText(text: controller.quantity.toString()),
+                      BigText(text: controller.inCartItems.toString()),
                       SizedBox(
                         width: Dimensions.size5,
                       ),
@@ -157,9 +160,14 @@ class PopularFoodDetail extends StatelessWidget {
                     borderRadius: BorderRadius.circular(Dimensions.size20),
                     color: AppColors.mainColor,
                   ),
-                  child: BigText(
-                    text: "\$${product.price!} | Add to Cart",
-                    color: Colors.white,
+                  child: GestureDetector(
+                    onTap: () {
+                      controller.addItem(product);
+                    },
+                    child: BigText(
+                      text: "\$${product.price!} | Add to Cart",
+                      color: Colors.white,
+                    ),
                   ),
                 )
               ],
