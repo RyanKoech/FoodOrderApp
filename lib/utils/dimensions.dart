@@ -35,4 +35,5 @@ class Dimensions {
   static final double size20w = dynamicSizeW(20);
   static final double size100w = dynamicSizeW(100);
   static final double size120w = dynamicSizeW(120);
+  static final double size200w = dynamicSizeW(200);
 }
