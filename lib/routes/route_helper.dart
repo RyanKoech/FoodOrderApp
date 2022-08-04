@@ -11,10 +11,10 @@ class RouteHelper {
   static const String cartPage = "/cart-page";
 
   static String getInitial() => '$initial';
-  static String getPopularFoodDetail(int pageId) =>
-      '$popularFoodDetail?pageId=$pageId';
-  static String getRecommendedFoodDetail(int pageId) =>
-      '$recommendedFoodDetail?pageId=$pageId';
+  static String getPopularFoodDetail(int pageId, String page) =>
+      '$popularFoodDetail?pageId=$pageId&page=$page';
+  static String getRecommendedFoodDetail(int pageId, String page) =>
+      '$recommendedFoodDetail?pageId=$pageId&page=$page';
   static String getCartPage() => '$cartPage';
 
   static List<GetPage> routes = [
@@ -23,7 +23,8 @@ class RouteHelper {
       name: popularFoodDetail,
       page: () {
         var pageId = Get.parameters['pageId'];
-        return PopularFoodDetail(pageId: int.parse(pageId!));
+        var page = Get.parameters['page'];
+        return PopularFoodDetail(pageId: int.parse(pageId!), page: page!);
       },
       transition: Transition.fadeIn,
     ),
@@ -31,7 +32,8 @@ class RouteHelper {
       name: recommendedFoodDetail,
       page: () {
         var pageId = Get.parameters['pageId'];
-        return RecommendedFoodDetail(pageId: int.parse(pageId!));
+        var page = Get.parameters['page'];
+        return RecommendedFoodDetail(pageId: int.parse(pageId!), page: page!);
       },
       transition: Transition.fadeIn,
     ),

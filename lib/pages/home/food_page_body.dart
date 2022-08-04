@@ -138,8 +138,8 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                           controller.recommendedProductList[index];
                       return GestureDetector(
                         onTap: () {
-                          Get.toNamed(
-                              RouteHelper.getRecommendedFoodDetail(index));
+                          Get.toNamed(RouteHelper.getRecommendedFoodDetail(
+                              index, "initial"));
                         },
                         child: Container(
                           margin: EdgeInsets.only(
@@ -271,7 +271,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(RouteHelper.getPopularFoodDetail(index));
+              Get.toNamed(RouteHelper.getPopularFoodDetail(index, "initial"));
             },
             child: Container(
               height: _height,

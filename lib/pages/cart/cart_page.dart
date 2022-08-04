@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/controller/cart_controller.dart';
+import 'package:food_delivery/controller/popular_product_controller.dart';
+import 'package:food_delivery/controller/recommended_product_controller.dart';
+import 'package:food_delivery/pages/food/popular_food_detail.dart';
 import 'package:food_delivery/pages/home/main_food_page.dart';
 import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/colors.dart';
@@ -80,19 +83,41 @@ class CartPage extends StatelessWidget {
                           margin: EdgeInsets.only(bottom: Dimensions.size10),
                           child: Row(
                             children: [
-                              Container(
-                                width: Dimensions.size100,
-                                height: Dimensions.size100,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(Constants.BASE_URL +
-                                        Constants.UPLOADS_URI +
-                                        currentItem.img!),
+                              GestureDetector(
+                                onTap: () {
+                                  var popularIndex =
+                                      Get.find<PopularProductController>()
+                                          .popularProductList
+                                          .indexOf(currentItem.product);
+                                  if (popularIndex >= 0) {
+                                    Get.toNamed(
+                                        RouteHelper.getPopularFoodDetail(
+                                            popularIndex, "cartpage"));
+                                  } else {
+                                    var recommendedIndex =
+                                        Get.find<RecommendedProductController>()
+                                            .recommendedProductList
+                                            .indexOf(currentItem.product);
+
+                                    Get.toNamed(
+                                        RouteHelper.getRecommendedFoodDetail(
+                                            recommendedIndex, "cartpage"));
+                                  }
+                                },
+                                child: Container(
+                                  width: Dimensions.size100,
+                                  height: Dimensions.size100,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(Constants.BASE_URL +
+                                          Constants.UPLOADS_URI +
+                                          currentItem.img!),
+                                    ),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.size20),
+                                    color: Colors.white,
                                   ),
-                                  borderRadius:
-                                      BorderRadius.circular(Dimensions.size20),
-                                  color: Colors.white,
                                 ),
                               ),
                               SizedBox(
