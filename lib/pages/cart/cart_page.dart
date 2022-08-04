@@ -133,7 +133,10 @@ class CartPage extends StatelessWidget {
                                               children: [
                                                 GestureDetector(
                                                     onTap: () {
-                                                      // controller.setQuantity(false);
+                                                      cartController.addItem(
+                                                        currentItem.product!,
+                                                        -1,
+                                                      );
                                                     },
                                                     child: Icon(Icons.remove,
                                                         color: AppColors
@@ -142,14 +145,17 @@ class CartPage extends StatelessWidget {
                                                   width: Dimensions.size5,
                                                 ),
                                                 BigText(
-                                                    text:
-                                                        "0"), //controller.inCartItems.toString()),
+                                                    text: currentItem.quantity
+                                                        .toString()), //controller.inCartItems.toString()),
                                                 SizedBox(
                                                   width: Dimensions.size5,
                                                 ),
                                                 GestureDetector(
                                                     onTap: () {
-                                                      // controller.setQuantity(true);
+                                                      cartController.addItem(
+                                                        currentItem.product!,
+                                                        1,
+                                                      );
                                                     },
                                                     child: Icon(Icons.add,
                                                         color: AppColors
